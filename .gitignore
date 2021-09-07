@@ -1,0 +1,31 @@
+# OS config files
+.DS_Store
+
+#env
+.env
+.env.test
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Compiled binary
+build
+dist
+public
+
+# Dependency directories
+node_modules
+scripts/bin
+
+# npm
+.npm
+package-lock.json
+yarn-lock.json
+
+#tests
+test
+test-report

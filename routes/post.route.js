@@ -2,10 +2,11 @@ const express = require('express');
 const {
   addPost, getAllPosts, addPostComment, getAllComments, likePost, dislikePost, deletePost
 } = require('../controllers/post.controller');
+const auth = require("../config/auth.config");
 
 const router = express.Router();
 
-router.post('/add-post', addPost);
+router.post('/add-post', auth, addPost);
 /**
  * @swagger
  * /posts/add-post:
@@ -46,7 +47,7 @@ router.post('/add-post', addPost);
  *              description: Bad request
  */
 
-router.get("/get-all-posts", getAllPosts);
+router.get("/get-all-posts", auth, getAllPosts);
 /**
  * @swagger
  * /posts/get-all-posts:
@@ -63,7 +64,7 @@ router.get("/get-all-posts", getAllPosts);
  *              description: Bad request
  */
 
-router.post("/add-post-comment", addPostComment);
+router.post("/add-post-comment", auth, addPostComment);
 /**
  * @swagger
  * /add-post-comment:
@@ -102,7 +103,7 @@ router.post("/add-post-comment", addPostComment);
  *              description: Bad request
  */
 
-router.get("/get-all-comments", getAllComments);
+router.get("/get-all-comments", auth, getAllComments);
 /**
  * @swagger
  * /posts/get-all-comments:
@@ -125,7 +126,7 @@ router.get("/get-all-comments", getAllComments);
  *              description: Bad request
  */
 
-router.put("/like-post", likePost);
+router.put("/like-post", auth, likePost);
 /**
  * @swagger
  * /posts/like-post:
@@ -154,7 +155,7 @@ router.put("/like-post", likePost);
  *              description: Bad request
  */
 
-router.put("/dislike-post", dislikePost);
+router.put("/dislike-post", auth, dislikePost);
 /**
  * @swagger
  * /posts/dislike-post:
@@ -183,7 +184,7 @@ router.put("/dislike-post", dislikePost);
  *              description: Bad request
  */
 
-router.delete("/delete-post", deletePost);
+router.delete("/delete-post", auth, deletePost);
 /**
  * @swagger
  * /posts/delete-post:

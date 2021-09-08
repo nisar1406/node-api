@@ -24,7 +24,7 @@ scripts/bin
 # npm
 .npm
 package-lock.json
-yarn-lock.json
+yarn.lock
 
 #tests
 test

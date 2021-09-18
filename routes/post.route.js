@@ -108,6 +108,8 @@ router.get("/get-all-comments", auth, getAllComments);
  * @swagger
  * /posts/get-all-comments:
  *   get:
+ *      security:
+ *          - jwt: []
  *      description: Used to get all posts
  *      tags:
  *          - posts

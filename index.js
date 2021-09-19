@@ -1,34 +1,34 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const swaggerUi = require("swagger-ui-express");
-const swaggerJsdoc = require("swagger-jsdoc");
+import express from 'express';
+import { json } from 'body-parser';
+import { serve, setup } from "swagger-ui-express";
+// import swaggerJsdoc, {Options} from "swagger-jsdoc";
 
-const userRoutes = require('./routes/user.route');
-const postRoutes = require('./routes/post.route');
+import userRoutes from './routes/user.route';
+import postRoutes from './routes/post.route';
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-app.use(bodyParser.json());
+app.use(json());
 
-/** Swagger Initialization - START */
-const swaggerOption = {
-  swaggerDefinition: (swaggerJsdoc.Options = {
-    info: {
-      title: "my-posts",
-      description: "API documentation",
-      contact: {
-        name: "Developer",
-      },
-      servers: ["http://localhost:3000/"],
-    },
-  }),
-  apis: ["index.js", "./routes/*.js"],
-};
+// /** Swagger Initialization - START */
+// const swaggerOption = {
+//   swaggerDefinition: (Options = {
+//     info: {
+//       title: "my-posts",
+//       description: "API documentation",
+//       contact: {
+//         name: "Developer",
+//       },
+//       servers: ["http://localhost:3000/"],
+//     },
+//   }),
+//   apis: ["index.js", "./routes/*.js"],
+// };
 
-const swaggerDocs = swaggerJsdoc(swaggerOption);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-/** Swagger Initialization - END */
+// const swaggerDocs = swaggerJsdoc(swaggerOption);
+// app.use("/api-docs", serve, setup(swaggerDocs));
+// /** Swagger Initialization - END */
 
 
 app.use('/users', userRoutes);

@@ -1,9 +1,9 @@
-const express = require('express');
-const userController = require(('../controllers/user.controller'));
+import { Router } from 'express';
+import {register, login } from '../controllers/user.controller';
 
-const router = express.Router();
+const router = Router();
 
-router.post('/register', userController.register);
+router.post('/register', register);
 /**
  * @swagger
  * /users/register:
@@ -52,7 +52,7 @@ router.post('/register', userController.register);
  *              description: Bad request
  */
 
-router.post("/login", userController.login);
+router.post("/login", login);
 /**
  * @swagger
  * /users/login:
@@ -89,4 +89,4 @@ router.post("/login", userController.login);
  *              description: Invalid email id or password.
  */
 
-module.exports = router;
+export default router;

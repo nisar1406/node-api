@@ -1,8 +1,6 @@
-const {
-  addPost, getAllPosts, addPostComment, getAllComments, likePost, dislikePost, deletePost
-} = require("../services/post.service");
+import { addPost, getAllPosts, addPostComment, getAllComments, likePost, dislikePost, deletePost } from "../services/post.service";
 
-exports.addPost = (req, res, next) => {
+const _addPost = (req, res, next) => {
   // Validation area
   const { description, imagePath, addedByUserId } = req.body;
 
@@ -22,8 +20,9 @@ exports.addPost = (req, res, next) => {
     });
   });
 };
+export { _addPost as addPost };
 
-exports.getAllPosts = (req, res, next) => {
+const _getAllPosts = (req, res, next) => {
   // Validation area
   const data = {};
   getAllPosts(data, (error, results) => {
@@ -37,10 +36,10 @@ exports.getAllPosts = (req, res, next) => {
     });
   });
 };
+export { _getAllPosts as getAllPosts };
 
-exports.addPostComment = (req, res, next) => {
+const _addPostComment = (req, res, next) => {
   // Validation area
-
   const { postId, comment, addedByUserId } = req.body;
 
   const data = {
@@ -59,8 +58,9 @@ exports.addPostComment = (req, res, next) => {
     });
   });
 };
+export { _addPostComment as addPostComment };
 
-exports.getAllComments = (req, res, next) => {
+const _getAllComments = (req, res, next) => {
   // Validation area
   const { postId } = req.query;
 
@@ -78,8 +78,9 @@ exports.getAllComments = (req, res, next) => {
     });
   });
 };
+export { _getAllComments as getAllComments };
 
-exports.likePost = (req, res, next) => {
+const _likePost = (req, res, next) => {
   // Validation area
   const { postId } = req.body;
 
@@ -97,8 +98,9 @@ exports.likePost = (req, res, next) => {
     });
   });
 };
+export { _likePost as likePost };
 
-exports.dislikePost = (req, res, next) => {
+const _dislikePost = (req, res, next) => {
   // Validation area
   const { postId } = req.body;
 
@@ -116,8 +118,9 @@ exports.dislikePost = (req, res, next) => {
     });
   });
 };
+export { _dislikePost as dislikePost };
 
-exports.deletePost = (req, res, next) => {
+const _deletePost = (req, res, next) => {
   // Validation area
   const { postId } = req.query;
 
@@ -135,3 +138,4 @@ exports.deletePost = (req, res, next) => {
     });
   });
 };
+export { _deletePost as deletePost };

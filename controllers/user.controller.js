@@ -1,6 +1,6 @@
-const usersService = require("../services/user.service");
+import { register, login } from "../services/user.service";
 
-exports.register = (req, res, next) => {
+const _register = (req, res, next) => {
   // Validation area
   const { firstName, lastName, emailId, password } = req.body;
   const data = {
@@ -9,7 +9,7 @@ exports.register = (req, res, next) => {
     emailId: emailId,
     password: password,
   };
-  usersService.register(data, (error, results) => {
+  register(data, (error, results) => {
     if (error) {
       console.log(error);
       if(error.errno === 1062) return res.status(409).send({ success: 0, message: "Email already exist." });
@@ -20,9 +20,11 @@ exports.register = (req, res, next) => {
       message: results,
     });
   });
-};
+}
+export { _register as register };
 
-exports.login = (req, res, next) => {
+
+const _login = (req, res, next) => {
   // Validation area
   const { emailId, password } = req.body;
 
@@ -30,7 +32,7 @@ exports.login = (req, res, next) => {
     emailId: emailId,
     password: password,
   };
-  usersService.login(data, (error, statusCode, results) => {
+  login(data, (error, statusCode, results) => {
     if (error) {
       // console.log(error);
       return res.status(statusCode).send({ success: 0, message: results });
@@ -41,4 +43,5 @@ exports.login = (req, res, next) => {
       token: results,
     });
   });
-};
+}
+export { _login as login };

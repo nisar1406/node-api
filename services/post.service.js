@@ -1,6 +1,6 @@
-const db = require("../config/db.config");
+import db from "../config/db.config";
 
-exports.addPost = (data, callback) => {
+export const addPost = (data, callback) => {
   const { description, imagePath, addedByUserId } = data;
   db.query(
     `INSERT INTO posts (description, imagePath, datetimeCreated, addedByUserId) VALUES (?, ?, ?, ?)`,
@@ -12,9 +12,9 @@ exports.addPost = (data, callback) => {
       return callback(null, `Post added successful`);
     }
   );
-};
+}
 
-exports.getAllPosts = (data, callback) => {
+export const getAllPosts = (data, callback) => {
   db.query(
     `SELECT p.id AS postId, p.description, p.datetimeCreated,
     p.likeCount, p.dislikeCount, p.addedByUserId, u.firstName, u.lastName
@@ -27,9 +27,9 @@ exports.getAllPosts = (data, callback) => {
       return callback(null, results);
     }
   );
-};
+}
 
-exports.addPostComment = (data, callback) => {
+export const addPostComment = (data, callback) => {
   const { postId, comment, addedByUserId } = data;
   db.query(
     `INSERT INTO comments (postId, comment, datetimeCreated, addedByUserId) VALUES (?, ?, ?, ?)`,
@@ -41,9 +41,9 @@ exports.addPostComment = (data, callback) => {
       return callback(null, 'Comment added successfully!');
     }
   );
-};
+}
 
-exports.getAllComments = (data, callback) => {
+export const getAllComments = (data, callback) => {
   const { postId } = data;
   db.query(
     `SELECT c.comment, c.datetimeCreated, c.addedByUserId, u.firstName, u.lastName
@@ -56,9 +56,9 @@ exports.getAllComments = (data, callback) => {
       return callback(null, results);
     }
   );
-};
+}
 
-exports.likePost = (data, callback) => {
+export const likePost = (data, callback) => {
   const { postId } = data;
   db.query(
     `UPDATE posts SET likeCount = likeCount + 1 where id = ?`,
@@ -71,9 +71,9 @@ exports.likePost = (data, callback) => {
       else return callback('Invalid post.')
     }
   );
-};
+}
 
-exports.dislikePost = (data, callback) => {
+export const dislikePost = (data, callback) => {
   const { postId } = data;
   db.query(
     `UPDATE posts SET likeCount = likeCount - 1 where id = ?`,
@@ -86,9 +86,9 @@ exports.dislikePost = (data, callback) => {
       else return callback('Invalid post.')
     }
   );
-};
+}
 
-exports.deletePost = (data, callback) => {
+export const deletePost = (data, callback) => {
   const { postId } = data;
   db.query(
     `DELETE FROM posts where id = ?`,
@@ -101,4 +101,4 @@ exports.deletePost = (data, callback) => {
       else return callback('Invalid post.')
     }
   );
-};
+}

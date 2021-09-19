@@ -1,10 +1,8 @@
-const express = require('express');
-const {
-  addPost, getAllPosts, addPostComment, getAllComments, likePost, dislikePost, deletePost
-} = require('../controllers/post.controller');
-const auth = require("../config/auth.config");
+import { Router } from 'express';
+import { addPost, getAllPosts, addPostComment, getAllComments, likePost, dislikePost, deletePost } from '../controllers/post.controller';
+import auth from '../config/auth.config';
 
-const router = express.Router();
+const router = Router();
 
 router.post('/add-post', auth, addPost);
 /**
@@ -207,4 +205,4 @@ router.delete("/delete-post", auth, deletePost);
  *              description: Bad request
  */
 
-module.exports = router;
+export default router;

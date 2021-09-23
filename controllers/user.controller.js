@@ -2,17 +2,17 @@ import { register, login } from "../services/user.service";
 
 const _register = (req, res, next) => {
   // Validation area
-  const { firstName, lastName, emailId, password } = req.body;
-  const data = {
-    firstName: firstName,
-    lastName: lastName,
-    emailId: emailId,
-    password: password,
+  // Validate request
+  if (!req.body) {
+    return res.status(400).send({
+      success: 0,
+      message: "Note content can not be empty"
+    });
   };
-  register(data, (error, results) => {
+  register(req.body, (error, results) => {
     if (error) {
       console.log(error);
-      if(error.errno === 1062) return res.status(409).send({ success: 0, message: "Email already exist." });
+      if (error.errNo === 1062) return res.status(409).send({ success: 0, message: "User already exist. Please Login" });
       else return res.status(400).send({ success: 0, message: "Bad request" });
     }
     return res.status(201).send({

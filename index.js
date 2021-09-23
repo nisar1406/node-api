@@ -2,6 +2,8 @@ import express from 'express';
 import { json } from 'body-parser';
 import { serve, setup } from "swagger-ui-express";
 // import swaggerJsdoc, {Options} from "swagger-jsdoc";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
 import userRoutes from './routes/user.route';
 import postRoutes from './routes/post.route';
@@ -9,27 +11,19 @@ import postRoutes from './routes/post.route';
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+dotenv.config();
 app.use(json());
 
-// /** Swagger Initialization - START */
-// const swaggerOption = {
-//   swaggerDefinition: (Options = {
-//     info: {
-//       title: "my-posts",
-//       description: "API documentation",
-//       contact: {
-//         name: "Developer",
-//       },
-//       servers: ["http://localhost:3000/"],
-//     },
-//   }),
-//   apis: ["index.js", "./routes/*.js"],
-// };
+const url = `mongodb+srv://admin:${process.env.MONGODB_PASSWORD}@cluster0.afqp8.mongodb.net/posts?retryWrites=true&w=majority`
 
-// const swaggerDocs = swaggerJsdoc(swaggerOption);
-// app.use("/api-docs", serve, setup(swaggerDocs));
-// /** Swagger Initialization - END */
-
+mongoose.connect(url, {
+  useNewUrlParser: true
+}).then(() => {
+  console.log("Successfully connected to the database");
+}).catch(err => {
+  console.log('Could not connect to the database. Exiting now...', err);
+  process.exit();
+});
 
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);

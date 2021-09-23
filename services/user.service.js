@@ -1,4 +1,5 @@
 import { genSalt, hash, compare } from 'bcryptjs';
+import userSchema from '../models/user.schema';
 import { sign } from 'jsonwebtoken';
 import db from "../config/db.config";
 import { secret, expireTime } from '../config/jwt.config';
@@ -7,16 +8,33 @@ export const register = async (data, callback) => {
   const { firstName, lastName, emailId, password } = data;
   const salt = await genSalt(10);
   const userPassword = await hash(password, salt);
-  db.query(
-    `INSERT INTO users (firstName, lastName, emailId, password) VALUES (?, ?, ?, ?)`,
-    [firstName, lastName, emailId, userPassword],
-    (error, results, fields) => {
-      if (error) {
-        return callback(error);
-      }
-      return callback(null, `Registration successful`);
-    }
-  );
+
+  const newUser = new userSchema({
+    firstName: firstName,
+    lastName: lastName,
+    emailId: emailId,
+    password: userPassword,
+  });
+  const isUserPresent = await userSchema.findOne({ emailId: emailId });
+  const error = {};
+  if (isUserPresent?._doc) {
+    error.errNo = 1062;
+    return callback(error);
+  }
+  else {
+    const success = await newUser.save();
+    if (success) return callback(null, `Registration successful`);
+  }
+  // db.query(
+  //   `INSERT INTO users (firstName, lastName, emailId, password) VALUES (?, ?, ?, ?)`,
+  //   [firstName, lastName, emailId, userPassword],
+  //   (error, results, fields) => {
+  //     if (error) {
+  //       return callback(error);
+  //     }
+  //     return callback(null, `Registration successful`);
+  //   }
+  // );
 }
 
 export const login = (data, callback) => {
